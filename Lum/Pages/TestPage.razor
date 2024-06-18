@@ -1,0 +1,22 @@
+﻿@using Lum.Core.Services.Interfaces
+@using Lum.Shared.ViewModels.Internal
+@layout AppLayout
+@inject IAnilistService AnilistService
+
+<ul>
+    @foreach (var anime in List)
+    {
+        <li>@anime.Name - @anime.Score</li>
+    }
+</ul>
+
+@code {
+    private ICollection<AnimeViewModel> List { get; set; } = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        List = await AnilistService.GetUserAnimes("Takasaki");
+    }
+
+}
+

@@ -1,0 +1,16 @@
+﻿<div class="card">
+    <div class="card-content">
+        <div class="content">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
+
+}

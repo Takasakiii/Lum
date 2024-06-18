@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@inherits LayoutComponentBase
+@inject IFileVersionProvider FileVersionProvider
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <link rel="stylesheet" href="/lib/bulma/css/bulma.min.css"/>
+    <link rel="stylesheet" href="@WithVersion("app.css")"/>
+    <link rel="stylesheet" href="@WithVersion("Lum.styles.css")" />
+    <title>Lum</title>
+    <HeadOutlet/>
+</head>
+
+<body>
+@Body
+<script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>
+
+@code {
+
+    private string WithVersion(string path) => 
+        FileVersionProvider.AddFileVersionToPath("/", path);
+
+}

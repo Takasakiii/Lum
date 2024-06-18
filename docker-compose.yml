@@ -1,0 +1,12 @@
+﻿services:
+  lum:
+    image: lum
+    build:
+      context: .
+      dockerfile: Lum/Lum/Dockerfile
+
+  lum.client:
+    image: lum.client
+    build:
+      context: .
+      dockerfile: Lum/Lum.Client/Dockerfile
