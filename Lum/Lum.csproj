@@ -21,9 +21,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Lum.Client\obj\Lum.Client.csproj.nuget.dgspec.json" />
-      <_ContentIncludedByDefault Remove="Lum.Client\obj\project.assets.json" />
-    </ItemGroup>
-
 </Project>

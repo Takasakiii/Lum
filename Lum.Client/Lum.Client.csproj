@@ -11,12 +11,18 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6"/>
+        <PackageReference Include="Refit" Version="7.1.1" />
+        <PackageReference Include="TakasakiStudio.Lina.AutoDependencyInjection" Version="2.1.4" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Lum.Shared\Lum.Shared.csproj" />
     </ItemGroup>
 
 </Project>
