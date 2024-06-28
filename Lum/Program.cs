@@ -11,6 +11,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddFileVersionProvider();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddLum();
 
@@ -26,6 +27,8 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapControllers();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapRazorComponents<AppLayout>()
     .AddInteractiveServerRenderMode()

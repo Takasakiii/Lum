@@ -1,5 +1,4 @@
 ﻿using Lum.Core.Services;
-using Lum.Core.Services.Interfaces;
 using Lum.Pages;
 using Lum.Shared.ViewModels.Forms;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using TakasakiStudio.Lina.AspNet.Controllers;
 namespace Lum.Controllers;
 
 [Controller]
+[ApiExplorerSettings(IgnoreApi = true)]
 [Route("/")]
 public class IndexController(IRecommendService recommendService) : PageController
 {

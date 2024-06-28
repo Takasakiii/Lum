@@ -6,6 +6,7 @@ namespace Lum.Controllers;
 
 [Controller]
 [Route("test")]
+[ApiExplorerSettings(IgnoreApi = true)]
 public class TestController : PageController
 {
     [HttpGet]
