@@ -2,6 +2,6 @@
 
 namespace Lum.Shared.ViewModels.AnilistGraphQl;
 
-public record DataViewModel(
+public record DataMediaListViewModel(
     [property: JsonPropertyName("MediaListCollection")]
     MediaListCollectionViewModel MediaListCollection);

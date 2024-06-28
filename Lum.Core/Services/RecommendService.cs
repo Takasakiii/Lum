@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Lum.Core.Adapters.Interfaces;
+using Lum.Core.Services.Interfaces;
 using Lum.Shared.Enums;
 using Lum.Shared.ViewModels.IA;
 using Lum.Shared.ViewModels.Internal;
@@ -8,10 +9,12 @@ using TakasakiStudio.Lina.AutoDependencyInjection.Attributes;
 namespace Lum.Core.Services;
 
 [Service<IRecommendService>]
-public class RecommendService(IGeminiAdapter geminiAdapter) : IRecommendService
+public class RecommendService(IGeminiAdapter geminiAdapter, IAnilistService anilistService) : IRecommendService
 {
-    public async Task<IEnumerable<string>> GetRecommend(ICollection<AnimeViewModel> animes)
+    public async Task<IEnumerable<AnimeViewModel>> GetRecommend(string username)
     {
+        var animes = await anilistService.GetUserAnimes(username);
+        
         ConversationElementViewModel[] chat =
         [
             new ConversationElementViewModel(ChatActor.System,
@@ -20,10 +23,11 @@ public class RecommendService(IGeminiAdapter geminiAdapter) : IRecommendService
         ];
 
         var chatResponse = await geminiAdapter.SendToChat(chat);
-        return FormatAnimeList(chatResponse);
+        return await anilistService.GetAnimesInfo(FormatAnimeList(chatResponse));
     }
+    
 
-    private static string AnilistToStringPrompt(ICollection<AnimeViewModel> animes)
+    private static string AnilistToStringPrompt(ICollection<AnimeInUserListViewModel> animes)
     {
         var builderString = new StringBuilder();
         foreach (var anime in animes)

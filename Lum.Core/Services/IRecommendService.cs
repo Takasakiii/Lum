@@ -4,5 +4,5 @@ namespace Lum.Core.Services;
 
 public interface IRecommendService
 {
-    Task<IEnumerable<string>> GetRecommend(ICollection<AnimeViewModel> animes);
+    Task<IEnumerable<AnimeViewModel>> GetRecommend(string username);
 }

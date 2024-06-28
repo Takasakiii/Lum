@@ -9,7 +9,7 @@ namespace Lum.Core.Adapters;
 [Adapter<IAnilistAdapter>]
 public class AnilistAdapter(IGraphQLClient anilistClient) : IAnilistAdapter
 {
-    public async Task<DataViewModel?> GetUserAnimeList(string userName)
+    public async Task<DataMediaListViewModel?> GetUserAnimeList(string userName)
     {
         var request = new GraphQLRequest
         {
@@ -36,7 +36,42 @@ public class AnilistAdapter(IGraphQLClient anilistClient) : IAnilistAdapter
                 userName
             }
         };
-        var response = await anilistClient.SendQueryAsync<DataViewModel>(request);
+        var response = await anilistClient.SendQueryAsync<DataMediaListViewModel>(request);
         return response.Data;
+    }
+
+    public async Task<DataMediaViewModel?> GetAnimeInfo(string name)
+    {
+        var request = new GraphQLRequest
+        {
+            Query = """
+                    query($search:String){
+                      Media(search: $search, type: ANIME) {
+                        id,
+                        idMal
+                        title {
+                          romaji
+                        },
+                        genres,
+                        status,
+                        description,
+                      }
+                    }
+                    """,
+            Variables = new
+            {
+                search = name
+            }
+        };
+
+        var response = await anilistClient.SendQueryAsync<DataMediaViewModel>(request);
+        return response.Data;
+    }
+
+    public async Task<IEnumerable<DataMediaViewModel>> GetAnimesInfo(IEnumerable<string> names)
+    {
+        var tasks = names.Select(x => Task.Run(async () => await GetAnimeInfo(x)));
+        var results = await Task.WhenAll(tasks);
+        return results.Where(x => x is not null)!;
     }
 }

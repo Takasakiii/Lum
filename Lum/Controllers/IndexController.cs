@@ -9,7 +9,7 @@ namespace Lum.Controllers;
 
 [Controller]
 [Route("/")]
-public class IndexController(IRecommendService recommendService, IAnilistService anilistService) : PageController
+public class IndexController(IRecommendService recommendService) : PageController
 {
     [HttpGet]
     public IActionResult GetIndex()
@@ -20,9 +20,7 @@ public class IndexController(IRecommendService recommendService, IAnilistService
     [HttpPost]
     public async Task<IActionResult> SubmitForm([FromForm] AnilistUsernameSearchViewModel form)
     {
-        
-        var animes = await anilistService.GetUserAnimes(form.Username);
-        var recomendation = await recommendService.GetRecommend(animes);
-        return Ok(recomendation);
+        var r = await recommendService.GetRecommend(form.Username);
+        return Ok(r);
     }
 }

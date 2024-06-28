@@ -1,5 +1,9 @@
 ﻿namespace Lum.Shared.ViewModels.Internal;
 
 public record AnimeViewModel(
-    string Name,
-    byte Score);
+    ulong Id,
+    ulong IdMal,
+    string Title,
+    ICollection<string> Genres,
+    string Status,
+    string Description);

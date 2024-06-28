@@ -4,5 +4,7 @@ namespace Lum.Core.Adapters.Interfaces;
 
 public interface IAnilistAdapter
 {
-    Task<DataViewModel?> GetUserAnimeList(string userName);
+    Task<DataMediaListViewModel?> GetUserAnimeList(string userName);
+    Task<DataMediaViewModel?> GetAnimeInfo(string name);
+    Task<IEnumerable<DataMediaViewModel>> GetAnimesInfo(IEnumerable<string> names);
 }

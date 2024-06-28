@@ -4,5 +4,6 @@ namespace Lum.Core.Services.Interfaces;
 
 public interface IAnilistService
 {
-    Task<ICollection<AnimeViewModel>> GetUserAnimes(string userName);
+    Task<ICollection<AnimeInUserListViewModel>> GetUserAnimes(string userName);
+    Task<IEnumerable<AnimeViewModel>> GetAnimesInfo(IEnumerable<string> animesQuery);
 }
