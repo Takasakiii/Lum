@@ -10,7 +10,7 @@ namespace Lum.Core.Services;
 [Service<IRecommendService>]
 public class RecommendService(IGeminiAdapter geminiAdapter) : IRecommendService
 {
-    public async Task<string> GetRecommend(ICollection<AnimeViewModel> animes)
+    public async Task<IEnumerable<string>> GetRecommend(ICollection<AnimeViewModel> animes)
     {
         ConversationElementViewModel[] chat =
         [
@@ -20,7 +20,7 @@ public class RecommendService(IGeminiAdapter geminiAdapter) : IRecommendService
         ];
 
         var chatResponse = await geminiAdapter.SendToChat(chat);
-        return chatResponse.LastOrDefault()?.Message ?? string.Empty;
+        return FormatAnimeList(chatResponse);
     }
 
     private static string AnilistToStringPrompt(ICollection<AnimeViewModel> animes)
@@ -28,9 +28,16 @@ public class RecommendService(IGeminiAdapter geminiAdapter) : IRecommendService
         var builderString = new StringBuilder();
         foreach (var anime in animes)
         {
-            builderString.Append($"Anime: {anime.Name}{(anime.Score > 0 ? $" - Score: {anime.Score}" : string.Empty)}\n");
+            builderString.Append(
+                $"Anime: {anime.Name}{(anime.Score > 0 ? $" - Score: {anime.Score}" : string.Empty)}\n");
         }
 
         return builderString.ToString();
+    }
+
+    private static IEnumerable<string> FormatAnimeList(IEnumerable<ConversationElementViewModel> chat)
+    {
+        return (chat.LastOrDefault()?.Message ?? string.Empty).Split('\n').Select(x => x.Trim())
+            .Where(x => !string.IsNullOrWhiteSpace(x));
     }
 }
