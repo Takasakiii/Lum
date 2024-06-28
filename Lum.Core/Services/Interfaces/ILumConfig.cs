@@ -2,6 +2,5 @@
 
 public interface ILumConfig
 {
-    string ChatModel { get; }
-    string OpenIaToken { get; }
+    string GeminiIaToken { get; }
 }

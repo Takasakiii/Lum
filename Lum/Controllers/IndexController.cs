@@ -9,7 +9,7 @@ namespace Lum.Controllers;
 
 [Controller]
 [Route("/")]
-public class IndexController(IRecomendationService recomendationService, IAnilistService anilistService) : PageController
+public class IndexController(IRecommendService recommendService, IAnilistService anilistService) : PageController
 {
     [HttpGet]
     public IActionResult GetIndex()
@@ -22,7 +22,7 @@ public class IndexController(IRecomendationService recomendationService, IAnilis
     {
         
         var animes = await anilistService.GetUserAnimes(form.Username);
-        var recomendation = await recomendationService.GetRecomendation(animes);
+        var recomendation = await recommendService.GetRecommend(animes);
         return Ok(recomendation);
     }
 }

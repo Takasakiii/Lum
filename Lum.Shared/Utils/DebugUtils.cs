@@ -7,7 +7,7 @@ public static class DebugUtils
     public static void PrintLn(params object[] elements)
     {
         Console.WriteLine(string.Join(" ", elements.Select(x => JsonSerializer.Serialize(x,
-            options: new JsonSerializerOptions
+            options: new()
             {
                 WriteIndented = true
             }))));
