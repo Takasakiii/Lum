@@ -1,6 +1,6 @@
 ﻿<button 
     type="@Type" 
-    class="button @(string.IsNullOrWhiteSpace(Color) ? string.Empty : $"is-{Color}") @(IsFull ? "is-fullwidth" : string.Empty)"
+    class="button @(string.IsNullOrWhiteSpace(Color) ? string.Empty : $"is-{Color}") @(IsFull ? "is-fullwidth" : string.Empty) @Class"
         >@ChildContent</button>
 
 @code {
@@ -17,5 +17,8 @@
     
     [Parameter]
     public bool IsFull { get; set; }
+    
+    [Parameter]
+    public string? Class { get; set; }
 
 }

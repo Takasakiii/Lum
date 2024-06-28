@@ -1,0 +1,50 @@
+﻿@using Lum.Client.Adapters.Interfaces
+@using Lum.Shared.ViewModels.Internal
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@inject IApiAdapter ApiAdapter
+
+<CenterScreen>
+    <Card>
+        @if (Loading)
+        {
+            <i class="fa-solid fa-spinner loading"></i>
+        }
+        else
+        {
+            <div>
+                <form class="columns" @onsubmit="OnSubmitHandle" @onsubmit:preventDefault="true">
+                    <Input Class="column" Name="username" Label="Username" Placeholder="Takasaki" @bind-Value="Username" />
+                    <div class="column button-container">
+                        <Button Type="submit" Color="success">Obter Sugestão</Button>
+                    </div>
+                </form>
+                @if (Recommends.Length > 0)
+                {
+                    <div>
+                        @foreach (var anime in Recommends)
+                        {
+                            <div>
+                                <a href="https://anilist.co/anime/@anime.Id"><h4>@anime.Title</h4></a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </Card>
+</CenterScreen>
+
+@code {
+
+    private string Username { get; set; } = string.Empty;
+    private AnimeViewModel[] Recommends { get; set; } = [];
+    private bool Loading { get; set; }
+
+    private async Task OnSubmitHandle()
+    {
+        Loading = true;
+        Recommends = (await ApiAdapter.ApiEndpoints.GetRecommends(Username)).ToArray();
+        Loading = false;
+    }
+
+}
